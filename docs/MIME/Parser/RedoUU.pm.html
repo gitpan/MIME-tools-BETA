@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+  <TITLE>MIME::Parser::RedoUU</TITLE>
+</HEAD>
+<BODY 
+       bgcolor="#FFFFFF" link="#CC3366" vlink="#993366" alink="#FF6666">
+<FONT FACE="sans-serif" SIZE=-1><A HREF="http://www.zeegee.com" TARGET="_top"><IMG SRC="icons/zeegee.gif" ALT="ZeeGee Software" ALIGN="RIGHT" BORDER="0"></A><A NAME="__TOP__"><H1>MIME::Parser::RedoUU</H1>
+</A>
+<P><B>This module is <FONT COLOR="#990000">BETA</FONT> code, which means that the interfaces are fairly stable BUT it has not been out in the community long enough to guarantee much testing. Use with caution! Please report any errors back to <A HREF="mailto:eryq@zeegee.com">eryq@zeegee.com</A> as soon as you can.</B><UL>
+<LI> <A NAME="menu:NAME"><A HREF="#NAME">NAME</A></A>
+<LI> <A NAME="menu:DESCRIPTION"><A HREF="#DESCRIPTION">DESCRIPTION</A></A>
+<LI> <A NAME="menu:PUBLIC_INTERFACE"><A HREF="#PUBLIC_INTERFACE">PUBLIC INTERFACE</A></A>
+<UL>
+<LI> <A NAME="menu:item:horizon_LINES"><A HREF="#item:horizon_LINES">horizon LINES</A></A>
+<LI> <A NAME="menu:item:redo_IN_ENTITY_PARSER"><A HREF="#item:redo_IN_ENTITY_PARSER">redo IN, ENTITY, PARSER</A></A>
+</UL>
+</UL>
+
+
+<P><HR>
+<A NAME="NAME"><H2><A HREF="#__TOP__"><IMG SRC="icons/h1bullet.gif" ALT="Top" BORDER="0"></A> NAME</H2></A>
+
+
+<P>MIME::Parser::RedoUU - a Redoer which sniffs out uuencoded data.
+
+
+
+<P><HR>
+<A NAME="DESCRIPTION"><H2><A HREF="#__TOP__"><IMG SRC="icons/h1bullet.gif" ALT="Top" BORDER="0"></A> DESCRIPTION</H2></A>
+
+
+<P>Look for embedded &quot;begin&quot; lines in a text/plain, like this:
+
+<FONT SIZE=3 FACE="courier"><PRE>
+    Content-type: text/plain
+    
+    begin 644 Hello.gif
+    M1TE&amp;.#=A$P`3`*$``/___P```(&quot;`@,#`P&quot;P`````$P`3```&quot;1X2/F&lt;'MSTQ0
+    M%(@)YMB\;W%)@$&lt;.(*:5W2F2@&lt;=F8]&gt;LH4P[7)P.T&amp;NZI7Z,(&amp;JF^@B121Y3
+    4Y4SNEJ&quot;J]8JZ:JTH(K$&quot;/A0``#L`
+    `
+    end
+</PRE></FONT>
+
+<P>Whenever we are confronted with a message whose effective 
+content-type is &quot;text/plain&quot;, we scan the decoded body to see 
+if it contains uuencoded data (generally given away by a &quot;begin XXX&quot; line). 
+By default, we scan only the first 24 lines, though you can change
+this if you need to.
+
+
+<P>If it does, we explode the uuencoded message into a multipart, 
+where the text before the first &quot;begin XXX&quot; becomes the first part,
+and all &quot;begin...end&quot; sections following become the subsequent parts. 
+The filename (if given) is accessible through the normal means.
+
+
+<P>Notice that, since this action is triggered by a &quot;redo&quot;, it will
+work even if the original uuencoded file has been base64-encoded.
+I have no earthly idea if that's a <I>good</I> thing, but it's pretty cool
+if you want it to be.  :-)  
+
+
+<P>Note: I do not schedule the uuencoded portions for re-doing.
+I could, but I don't.  
+
+
+
+<P><HR>
+<A NAME="PUBLIC_INTERFACE"><H2><A HREF="#__TOP__"><IMG SRC="icons/h1bullet.gif" ALT="Top" BORDER="0"></A> PUBLIC INTERFACE</H2></A>
+
+
+
+<DL>
+<P><DT><B><A HREF="#__TOP__"><IMG SRC="icons/itembullet.gif" ALT="Top" BORDER="0"></A> <A NAME="item:horizon"><A NAME="item:horizon_LINES">horizon LINES</A></A></B></DT>
+<DD>
+<I>Instance method.</I>
+Set the number of lines to read while looking for lines like
+&quot;begin 644&quot;, before giving up.  Negative means no limit.
+Default is 24.
+
+<P><DT><B><A HREF="#__TOP__"><IMG SRC="icons/itembullet.gif" ALT="Top" BORDER="0"></A> <A NAME="item:redo"><A NAME="item:redo_IN_ENTITY_PARSER">redo IN, ENTITY, PARSER</A></A></B></DT>
+<DD>
+<I>Instance method.</I>
+Try to detect and dispatch embedded uuencode as a fake multipart message.
+Returns new entity or undef.
+
+<P><HR>
+<ADDRESS><FONT SIZE=-1>
+Generated Fri Sep 14 02:48:17 2001 by cvu_pod2html
+</FONT></ADDRESS>
+</FONT></BODY>
+</HTML>

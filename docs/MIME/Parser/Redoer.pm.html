@@ -1,0 +1,74 @@
+<HTML>
+<HEAD>
+  <TITLE>MIME::Parser::Redoer</TITLE>
+</HEAD>
+<BODY 
+       bgcolor="#FFFFFF" link="#CC3366" vlink="#993366" alink="#FF6666">
+<FONT FACE="sans-serif" SIZE=-1><A HREF="http://www.zeegee.com" TARGET="_top"><IMG SRC="icons/zeegee.gif" ALT="ZeeGee Software" ALIGN="RIGHT" BORDER="0"></A><A NAME="__TOP__"><H1>MIME::Parser::Redoer</H1>
+</A>
+<P><B>This module is <FONT COLOR="#990000">BETA</FONT> code, which means that the interfaces are fairly stable BUT it has not been out in the community long enough to guarantee much testing. Use with caution! Please report any errors back to <A HREF="mailto:eryq@zeegee.com">eryq@zeegee.com</A> as soon as you can.</B><UL>
+<LI> <A NAME="menu:NAME"><A HREF="#NAME">NAME</A></A>
+<LI> <A NAME="menu:DESCRIPTION"><A HREF="#DESCRIPTION">DESCRIPTION</A></A>
+<LI> <A NAME="menu:PUBLIC_INTERFACE"><A HREF="#PUBLIC_INTERFACE">PUBLIC INTERFACE</A></A>
+<UL>
+<LI> <A NAME="menu:item:redo_INSTREAM_ENTITY_PARSER"><A HREF="#item:redo_INSTREAM_ENTITY_PARSER">redo INSTREAM, ENTITY, PARSER</A></A>
+</UL>
+</UL>
+
+
+<P><HR>
+<A NAME="NAME"><H2><A HREF="#__TOP__"><IMG SRC="icons/h1bullet.gif" ALT="Top" BORDER="0"></A> NAME</H2></A>
+
+
+<P>MIME::Parser::Redoer - auxilliary parser logic to re-parse files
+
+
+
+<P><HR>
+<A NAME="DESCRIPTION"><H2><A HREF="#__TOP__"><IMG SRC="icons/h1bullet.gif" ALT="Top" BORDER="0"></A> DESCRIPTION</H2></A>
+
+
+<P>Sometimes, we might get files which proport to be one format,
+but which we'd like to treat as another; e.g.:
+
+<FONT SIZE=3 FACE="courier"><PRE>
+    Content-type: text/plain
+    
+    begin 644 Hello.gif
+    M1TE&amp;.#=A$P`3`*$``/___P```(&quot;`@,#`P&quot;P`````$P`3```&quot;1X2/F&lt;'MSTQ0
+    M%(@)YMB\;W%)@$&lt;.(*:5W2F2@&lt;=F8]&gt;LH4P[7)P.T&amp;NZI7Z,(&amp;JF^@B121Y3
+    4Y4SNEJ&quot;J]8JZ:JTH(K$&quot;/A0``#L`
+    `
+    end
+</PRE></FONT>
+
+<P>These files may in fact be MIME-encoded themselves, but
+users might still want to detect/extract them.  That's what the
+re-doer does.  Every decoded file is visited at least once
+by every re-doer installed in the parser.  If the re-doer
+sees something interesting, it can use the parser to 
+tweak the parsed entity.
+
+
+
+<P><HR>
+<A NAME="PUBLIC_INTERFACE"><H2><A HREF="#__TOP__"><IMG SRC="icons/h1bullet.gif" ALT="Top" BORDER="0"></A> PUBLIC INTERFACE</H2></A>
+
+
+
+<DL>
+<P><DT><B><A HREF="#__TOP__"><IMG SRC="icons/itembullet.gif" ALT="Top" BORDER="0"></A> <A NAME="item:redo"><A NAME="item:redo_INSTREAM_ENTITY_PARSER">redo INSTREAM, ENTITY, PARSER</A></A></B></DT>
+<DD>
+<I>Instance method.</I>
+Re-do the given entity.  
+Return false if there does not appear to be anything to [re]do.
+Return the replacement entity of something was actually done.
+
+</DL>
+
+<P><HR>
+<ADDRESS><FONT SIZE=-1>
+Generated Fri Sep 14 02:48:19 2001 by cvu_pod2html
+</FONT></ADDRESS>
+</FONT></BODY>
+</HTML>
